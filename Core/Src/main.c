@@ -58,11 +58,21 @@ static void MX_I2C1_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */ 
+#define WHO_AM_I (0x71 << 1)
+#define POWER_MANAGEMENT_1 (0x01)
+#define ACCEL_XOUT_H (0x3B)
+uint16_t acc_x = 0;
+	// initial buffer array
+uint8_t buff[14] = {0};
+void mpu_read_x_gyro(){
 
-void mpu(){
-	uint8_t data_send[] = ;
-	uint16_t add = 0x71;
-	HAL_I2C_Master_Transmit(&hi2c1, 
+	// write data ACCEL_XOUT_H register
+	HAL_I2C_Master_Transmit(&hi2c1, WHO_AM_I, (uint8_t *)ACCEL_XOUT_H, 1, 100); 
+	
+	// read 
+	HAL_I2C_Master_Receive(&hi2c1, WHO_AM_I, buff, sizeof(buff), 100);
+	
+	acc_x = ((buff[0] << 8) | buff [1]);
 }
 /* USER CODE END 0 */
 
@@ -108,6 +118,7 @@ int main(void)
     /* USER CODE BEGIN 3 */
 		HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
 		HAL_Delay(500);
+		mpu_read_x_gyro();
   }
   /* USER CODE END 3 */
 }
