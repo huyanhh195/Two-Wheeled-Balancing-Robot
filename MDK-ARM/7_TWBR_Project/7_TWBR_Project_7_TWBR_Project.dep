@@ -1,7 +1,7 @@
 Dependencies for Project '7_TWBR_Project', Target '7_TWBR_Project': (DO NOT MODIFY !)
 CompilerVersion: 5060750::V5.06 update 6 (build 750)::.\ARMCC
 F (startup_stm32f103xb.s)(0x676E7B89)(--cpu Cortex-M3 -g --apcs=interwork -I.\RTE\_7_TWBR_Project-IC:\Users\Huy\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\Huy\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include--pd "__UVISION_VERSION SETA 531" --pd "_RTE_ SETA 1" --pd "STM32F10X_MD SETA 1" --pd "_RTE_ SETA 1"--list startup_stm32f103xb.lst --xref -o 7_twbr_project\startup_stm32f103xb.o --depend 7_twbr_project\startup_stm32f103xb.d)
-F (../Core/Src/main.c)(0x676E835A)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ..\Core\MyLib-I.\RTE\_7_TWBR_Project-IC:\Users\Huy\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\Huy\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F10X_MD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xB-o 7_twbr_project\main.o --omf_browse 7_twbr_project\main.crf --depend 7_twbr_project\main.d)
+F (../Core/Src/main.c)(0x67718426)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ..\Core\MyLib-I.\RTE\_7_TWBR_Project-IC:\Users\Huy\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\Huy\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F10X_MD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xB-o 7_twbr_project\main.o --omf_browse 7_twbr_project\main.crf --depend 7_twbr_project\main.d)
 I (../Core/Inc/main.h)(0x676E7B85)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x66C1FCFB)
 I (../Core/Inc/stm32f1xx_hal_conf.h)(0x676E7B84)
@@ -28,8 +28,8 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h)(0x66C1FCFB)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h)(0x66C1FCFB)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_i2c.h)(0x66C1FCFB)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h)(0x66C1FCFB)
-I (..\Core\MyLib\mpu9250.h)(0x676E8571)
-I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x5EC78414)
+I (..\Core\MyLib\lcd1602.h)(0x67718426)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x5EC78414)
 F (../Core/Src/stm32f1xx_it.c)(0x676E7B84)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ..\Core\MyLib-I.\RTE\_7_TWBR_Project-IC:\Users\Huy\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\Huy\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F10X_MD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xB-o 7_twbr_project\stm32f1xx_it.o --omf_browse 7_twbr_project\stm32f1xx_it.crf --depend 7_twbr_project\stm32f1xx_it.d)
 I (../Core/Inc/main.h)(0x676E7B85)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x66C1FCFB)
@@ -475,10 +475,10 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h)(0x66C1FCFB)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h)(0x66C1FCFB)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_i2c.h)(0x66C1FCFB)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h)(0x66C1FCFB)
-F (..\Core\MyLib\mpu9250.c)(0x676E84C6)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ..\Core\MyLib-I.\RTE\_7_TWBR_Project-IC:\Users\Huy\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\Huy\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F10X_MD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xB-o 7_twbr_project\mpu9250.o --omf_browse 7_twbr_project\mpu9250.crf --depend 7_twbr_project\mpu9250.d)
-I (..\Core\MyLib\mpu9250.h)(0x676E8571)
+F (..\Core\MyLib\lcd1602.c)(0x677184D3)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ..\Core\MyLib-I.\RTE\_7_TWBR_Project-IC:\Users\Huy\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\Huy\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F10X_MD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xB-o 7_twbr_project\lcd1602.o --omf_browse 7_twbr_project\lcd1602.crf --depend 7_twbr_project\lcd1602.d)
+I (..\Core\MyLib\lcd1602.h)(0x67718426)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5EC7840C)
-I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x5EC78414)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x5EC78414)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x66C1FCFB)
 I (../Core/Inc/stm32f1xx_hal_conf.h)(0x676E7B84)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h)(0x66C1FCFB)
@@ -503,4 +503,4 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h)(0x66C1FCFB)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h)(0x66C1FCFB)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_i2c.h)(0x66C1FCFB)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h)(0x66C1FCFB)
-F (..\Core\MyLib\mpu9250.h)(0x676E8571)()
+F (..\Core\MyLib\lcd1602.h)(0x67718426)()

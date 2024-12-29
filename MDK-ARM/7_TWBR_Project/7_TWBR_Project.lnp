@@ -18,6 +18,7 @@
 "7_twbr_project\stm32f1xx_hal_tim.o"
 "7_twbr_project\stm32f1xx_hal_tim_ex.o"
 "7_twbr_project\system_stm32f1xx.o"
+"7_twbr_project\lcd1602.o"
 --strict --scatter "7_TWBR_Project\7_TWBR_Project.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

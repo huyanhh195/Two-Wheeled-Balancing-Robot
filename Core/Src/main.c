@@ -21,8 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "mpu9250.h"
-#include <stdint.h>
+#include "lcd1602.h"
 
 /* USER CODE END Includes */
 
@@ -59,11 +58,6 @@ static void MX_I2C1_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */ 
 
-void mpu(){
-	uint8_t data_send[] = ;
-	uint16_t add = 0x71;
-	HAL_I2C_Master_Transmit(&hi2c1, 
-}
 /* USER CODE END 0 */
 
 /**
@@ -97,6 +91,11 @@ int main(void)
   MX_GPIO_Init();
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
+	lcd_init(&hi2c1);
+	lcd_goto_xy(1, 5);
+	lcd_send_string("HUY");
+	lcd_delay(1000);
+	lcd_blink(BLINK_ON);
   /* USER CODE END 2 */
 
   /* Infinite loop */
