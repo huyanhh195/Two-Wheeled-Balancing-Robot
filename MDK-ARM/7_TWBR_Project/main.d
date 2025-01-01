@@ -27,4 +27,6 @@
 7_twbr_project\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_i2c.h
 7_twbr_project\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 7_twbr_project\main.o: ..\Core\MyLib\lcd1602.h
+7_twbr_project\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 7_twbr_project\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+7_twbr_project\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h

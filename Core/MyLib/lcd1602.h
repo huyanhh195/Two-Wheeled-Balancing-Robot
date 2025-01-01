@@ -1,9 +1,18 @@
+/*
+ * lcd1602.h
+ *
+ *  Created on: Dec 27, 2024
+ *      Author: Huy
+ */
+
 #ifndef LCD_1602_H_
 #define LCD_1602_H_
 
 /* include lib */
 #include <stdint.h>
+#include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "stm32f1xx_hal.h"
 
 /*-------------------------MACRO-------------------------*/
@@ -41,6 +50,12 @@
 #define LCD_BLINK_OFF 0x00
 #define LCD_BLINK_ON 0x01
 
+// flags for display/cursor shift
+#define LCD_DISPLAY_MOVE 0x08
+#define LCD_CURSOR_MOVE 0x00
+#define LCD_MOVE_RIGHT 0x04
+#define LCD_MOVE_LEFT 0x00
+
 #define LCD_CUSOR_OFF 0x00
 #define LCD_CUSOR_ON 0x02
 
@@ -67,15 +82,33 @@
 #define BLINK_OFF 0
 #define BLINK_ON 1
 
+// status of display
+#define DISPLAY_OFF 0
+#define DISPLAY_ON 1
+
+// status of cusor
+#define CUSOR_OFF 0
+#define CUSOR_ON 1
+
+// special character
+#define BLANK_SPACE ' '
+
 /*-------------------------Prototype function-------------------------*/
-void lcd_delay(uint32_t delay);
-void lcd_write(uint8_t mode, uint8_t data);
 void lcd_init(I2C_HandleTypeDef *hi2c);
-void lcd_send_char(char data);
+void lcd_delay(uint32_t delay);
+void lcd_write(uint8_t mode, char data);
 void lcd_send_string(char *data);
+void lcd_create_char(uint8_t location, uint8_t *char_map);
+void lcd_send_custom_char(int x, int y, int location);
+void lcd_send_char(char data);
+void lcd_send_int(uint8_t data);
+void lcd_send_float(float data);
+void lcd_clear_xy(uint8_t x, uint8_t y);
 void lcd_clear(void);
 void lcd_home(void);
 void lcd_goto_xy(uint8_t x, uint8_t y);
 void lcd_blink(uint8_t mode);
+void lcd_cusor(uint8_t mode);
+void lcd_display(uint8_t mode);
 #endif
 

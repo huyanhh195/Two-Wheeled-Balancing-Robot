@@ -57,7 +57,7 @@ static void MX_I2C1_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */ 
-
+extern uint8_t heart[10];
 /* USER CODE END 0 */
 
 /**
@@ -92,10 +92,11 @@ int main(void)
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
 	lcd_init(&hi2c1);
-	lcd_goto_xy(1, 5);
-	lcd_send_string("HUY");
-	lcd_delay(1000);
-	lcd_blink(BLINK_ON);
+	lcd_send_char('s');
+	lcd_delay(500);
+	lcd_scroll_left();
+	lcd_delay(500);
+	lcd_send_char('s');
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -107,6 +108,7 @@ int main(void)
     /* USER CODE BEGIN 3 */
 		HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
 		HAL_Delay(500);
+
   }
   /* USER CODE END 3 */
 }
