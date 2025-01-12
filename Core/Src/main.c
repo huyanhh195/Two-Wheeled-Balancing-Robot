@@ -58,21 +58,98 @@ static void MX_I2C1_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */ 
-#define WHO_AM_I (0x71 << 1)
-#define POWER_MANAGEMENT_1 (0x01)
+#define SIZE_GYRO 6
+#define SIZE_ACCEL 6
+#define MPU_ADDR (0x68 << 1)
+#define MPU_PWR_MGMT_1 (0x6B)
+#define MPU_SMPLRT_DIV (0x19)
+#define MPU_CONFIG (0x1A)
+#define MPU_GYRO_CONFIG (0x1B)
+#define MPU_ACCEL_CONFIG (0x1C)
 #define ACCEL_XOUT_H (0x3B)
-uint16_t acc_x = 0;
-	// initial buffer array
-uint8_t buff[14] = {0};
-void mpu_read_x_gyro(){
+#define GYRO_XOUT_H (0x43)
+#define TEMP_OUT_H (0x41)
 
-	// write data ACCEL_XOUT_H register
-	HAL_I2C_Master_Transmit(&hi2c1, WHO_AM_I, (uint8_t *)ACCEL_XOUT_H, 1, 100); 
+uint16_t acc_x = 0;
+uint8_t buff[14] = {0};
+
+#define MPU_IS_CONNECT(hi2c, addr) HAL_I2C_IsDeviceReady(&hi2c,addr, 5, 200)
+void mpu_init(){
+	// check connect imu
+	if(MPU_IS_CONNECT(hi2c1, MPU_ADDR) != HAL_OK){
+		uint8_t cnt = 50;
+		while(cnt--){
+			HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
+			HAL_Delay(20);
+		}
+	}
 	
-	// read 
-	HAL_I2C_Master_Receive(&hi2c1, WHO_AM_I, buff, sizeof(buff), 100);
+	// 
+	uint8_t data[2];
+	data[0] = MPU_PWR_MGMT_1;
+	data[1] = 0;
+	HAL_I2C_Master_Transmit(&hi2c1, MPU_ADDR, data, sizeof(data), 1000);
+
+	//
+	data[0] = MPU_SMPLRT_DIV;
+	data[1] = 0x07;
+	HAL_I2C_Master_Transmit(&hi2c1, MPU_ADDR, data, sizeof(data), 1000);
 	
-	acc_x = ((buff[0] << 8) | buff [1]);
+	// Set Gyroscopic configuration in GYRO_CONFIG Register
+	data[0] = MPU_GYRO_CONFIG;
+	data[1] = 0;
+	HAL_I2C_Master_Transmit(&hi2c1, MPU_ADDR, data, sizeof(data), 1000);
+	
+  // Set accelerometer configuration in ACCEL_CONFIG Register
+	data[0] = MPU_ACCEL_CONFIG;
+	data[1] = 0; // XA_ST=0,YA_ST=0,ZA_ST=0, FS_SEL=0 -> ± 2g
+	HAL_I2C_Master_Transmit(&hi2c1, MPU_ADDR, data, sizeof(data), 1000);
+}
+
+
+uint16_t accel_x_raw, accel_y_raw, accel_z_raw;
+float ax, ay, az;
+void mpu_read_accel(){
+	uint8_t data_accel[6] = {0};
+	HAL_I2C_Mem_Read(&hi2c1, MPU_ADDR, ACCEL_XOUT_H, 1, data_accel, SIZE_ACCEL, 100);
+//	HAL_I2C_Master_Transmit(&hi2c1, MPU_ADDR, (uint8_t *)ACCEL_XOUT_H, 1, 100);
+//	HAL_Delay(1);
+//	HAL_I2C_Master_Receive(&hi2c1, MPU_ADDR, data_accel, 6, 100);
+	
+	// combine data high and low to form 16 bit accelerometer data for x, y, z axis
+	accel_x_raw = (data_accel[0] << 8) | data_accel[1];
+	accel_y_raw = (data_accel[2] << 8) | data_accel[3];
+	accel_z_raw = (data_accel[4] << 8) | data_accel[5];
+	
+	// convert data into proper ‘g’ format
+	ax = accel_x_raw / 16384.0;
+	ay = accel_y_raw / 16384.0;
+	az = accel_z_raw / 16384.0;
+}
+
+
+uint16_t gryo_x_raw, gryo_y_raw, gryo_z_raw;
+float gx, gy, gz;
+
+void mpu_read_gyro(){
+	uint8_t data_gyro[6] = {0};
+	HAL_I2C_Mem_Read(&hi2c1, MPU_ADDR, GYRO_XOUT_H, 1, data_gyro, SIZE_GYRO, 100);
+	gryo_x_raw = (data_gyro[0] << 8) | data_gyro[1];
+	gryo_y_raw = (data_gyro[2] << 8) | data_gyro[3];
+	gryo_z_raw = (data_gyro[4] << 8) | data_gyro[5];
+	
+	gx = gryo_x_raw / 131.0;
+	gy = gryo_y_raw / 131.0;
+	gz = gryo_z_raw / 131.0;
+}
+
+float temp;
+void mpu_read_temp(){
+	uint8_t data_temp[2] = {0};
+	HAL_I2C_Mem_Read(&hi2c1, MPU_ADDR, TEMP_OUT_H, 1, data_temp, 2, 100); 
+	
+	uint16_t data = (data_temp[0] << 8) | data_temp[1];
+	temp = data / 340.0 + 36.53;
 }
 /* USER CODE END 0 */
 
@@ -107,6 +184,7 @@ int main(void)
   MX_GPIO_Init();
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
+	mpu_init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -116,9 +194,13 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
-		HAL_Delay(500);
-		mpu_read_x_gyro();
+		mpu_read_accel();
+		mpu_read_gyro();
+		mpu_read_temp();
+		HAL_Delay(1000);
+
+		//HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
+		//HAL_Delay(500);
   }
   /* USER CODE END 3 */
 }
